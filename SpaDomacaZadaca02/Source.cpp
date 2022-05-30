@@ -1,11 +1,13 @@
 #include <SFML/Graphics.hpp>
+#include "game_of_life.h"
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Hello, SFML world!");
 	window.setFramerateLimit(60);
-	//Cvijet cvijet(&window);
+	game_of_life gol;
 
+	sf::Clock clock;
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -15,8 +17,12 @@ int main()
 				window.close();
 		}
 
+		if (clock.getElapsedTime().asSeconds() <= 2) continue;
+		clock.restart();
+
 		window.clear();
-		//cvijet.draw();
+		gol.draw(&window);
+		gol.next_generation();
 		window.display();
 	}
 
